@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="favicon.ico" rel="icon" type="image/ico">
+    <link href="css/main.css" rel="stylesheet" />
+    <script src="mdl/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-red.min.css">
+    <title>Image Guess</title>
+</head>
+
+<body>
+    <script defer src="scripts/images.js"></script>
+    <script defer src="scripts/init.js"></script>
+    <div id="settings-dialog">
+        <h1 id="message">Game Settings</h1>
+        <form id="settings-form">
+            <div class="group">
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" id="team-1">
+                    <label class="mdl-textfield__label" for="team-1">Team Name</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" id="team-2">
+                    <label class="mdl-textfield__label" for="team-2">Team Name</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" id="team-3">
+                    <label class="mdl-textfield__label" for="team-3">Team Name</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" id="team-4">
+                    <label class="mdl-textfield__label" for="team-4">Team Name</label>
+                </div>
+            </div>
+            <div class="group">
+                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="timer-toggle">
+                    <input type="checkbox" id="timer-toggle" class="mdl-switch__input">
+                    <span class="mdl-switch__label">Timer Toggle</span>
+                </label>
+                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="german-toggle">
+                    <input type="checkbox" id="german-toggle" class="mdl-switch__input">
+                    <span class="mdl-switch__label">German Toggle</span>
+                </label>
+            </div>
+        </form>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" onclick="setSettings()">Play</button>
+    </div>
+    <div id="wrapper">
+        <div id="game">
+            <div id="game-image" onclick="showAnswer();"></div>
+            <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="next-button" onclick="getNext();" disabled><i class="material-icons">arrow_forward</i>
+            </button>
+        </div>
+        <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
+        </div>
+    </div>
+</body>
+
+</html>
