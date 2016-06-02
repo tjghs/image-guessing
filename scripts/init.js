@@ -88,6 +88,7 @@ function getNext() {
     document.getElementById("game-image").style.backgroundImage = "url('" + url + "')";
 }
 function showAnswer() {
+    
 }
 
 /*(function() {
