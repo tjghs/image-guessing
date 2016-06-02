@@ -1,6 +1,6 @@
 "use strict";
 var playingTeam,
-    playingImages = [],
+    playingTeams = [],
     goNext = false,
     game = true;
 
@@ -9,6 +9,7 @@ function setSettings() {
     var tempVal;
     for (var i = 1; i < 5; i++) {
         tempVal = document.getElementById("team-" + i).value;
+        playingTeams[i - 1] = document.getElementById("team-" + i).value;
         if (tempVal == "") {
             break;
         }
@@ -32,6 +33,13 @@ function setSettings() {
     startGame(teams, timer, german);
 }
 
+function addScore(team) {
+    var teams = JSON.parse(localStorage.getItem("scores"));
+    teams[team]++;
+    console.log(teams[team]);
+    localStorage.setItem("scores", JSON.stringify(teams));
+}
+
 function printTeams() {
     var teams = JSON.parse(localStorage.getItem("scores"));
     for (var key in teams) {
@@ -45,12 +53,15 @@ function startGame(teams, timer, german) {
     var i = 0;
     var url = getRandomImage();
     document.getElementById("game-image").style.backgroundImage = "url('" + url + "')";
+    
     if(timer) {
         window.setInterval(function() {
-            getNext();
+            getNext(false);
         }, 3000);
+    } else {
+        /*while(game) {
+        }*/
     }
-    
     /*while (true) {
         console.log(playingTeam);
         playingTeam = (i + 1) + "";
@@ -77,10 +88,10 @@ function startGame(teams, timer, german) {
     printTeams();
 }
 
-function getNext() {
+function getNext(scoreAdd) {
     var url = getRandomImage();
     if (url == "end") {
-        document.getElementById("game").innerHTML = '<h1 style="margin-left:24px;">Game Over!</h1>';
+        document.getElementById("game").innerHTML = '<h1 style="margin-left:24px;">Game Over!</h1><div>' + localStorage.getItem("scores") + '</div>';
         game = false;
         printTeams();
         return;
@@ -91,6 +102,9 @@ function showAnswer() {
     
 }
 
+document.getElementById("next-button").addEventListener('click', function() {
+    addScore(playingTeam);
+});
 /*(function() {
     'use strict';
     window['counter'] = 0;

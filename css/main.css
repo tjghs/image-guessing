@@ -10,9 +10,11 @@
     overflow: hidden;
 }
 #settings-dialog {
-    width: 500px;
-    height: 450px;
-    top: 5vh;
+    /*width: 500px;
+    height: 450px;*/
+    width: 50vw;
+    height: calc(95vh - 30px);
+    top: calc(5vh - 15px);
     left: calc(50vw - 265px);
     z-index: 100;
     position: absolute;
@@ -49,14 +51,14 @@
     margin: 0;
     background-position: center;
     background-repeat: no-repeat;
-    -webkit-transform: scale(1.5);
-    -moz-transform: scale(1.5);
-    -ms-transform: scale(1.5);
-    -o-transform: scale(1.5);
-    transform: scale(1.5);
+    -webkit-transform: scale(3.5);
+    -moz-transform: scale(3.5);
+    -ms-transform: scale(3.5);
+    -o-transform: scale(3.5);
+    transform: scale(3.5);
 }
 #next-button {
-    top: calc(50vh - 56px);
-    left: 87.5%;
+    top: calc(87.5vh - 56px);
+    left: 87.5vw;
     position: absolute;
 }
