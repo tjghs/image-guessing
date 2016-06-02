@@ -9,7 +9,7 @@ function setSettings() {
     var tempVal;
     for (var i = 1; i < 5; i++) {
         tempVal = document.getElementById("team-" + i).value;
-        playingTeams[i - 1] = document.getElementById("team-" + i).value;
+        console.log(playingTeams);
         if (tempVal == "") {
             break;
         }
@@ -18,6 +18,7 @@ function setSettings() {
             return;
         }
         teams[tempVal] = 0;
+        playingTeams[i - 1] = document.getElementById("team-" + i).value;
     }
     localStorage.setItem("scores", JSON.stringify(teams));
     printTeams();
