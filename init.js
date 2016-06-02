@@ -1,6 +1,6 @@
 "use strict";
 var playingTeam,
-    playingTeams = [],
+    playingImages = [],
     goNext = false,
     game = true,
     zoomOut = true;
@@ -10,7 +10,6 @@ function setSettings() {
     var tempVal;
     for (var i = 1; i < 5; i++) {
         tempVal = document.getElementById("team-" + i).value;
-        console.log(playingTeams);
         if (tempVal == "") {
             break;
         }
@@ -19,7 +18,6 @@ function setSettings() {
             return;
         }
         teams[tempVal] = 0;
-        playingTeams[i - 1] = document.getElementById("team-" + i).value;
     }
     localStorage.setItem("scores", JSON.stringify(teams));
     printTeams();
@@ -35,13 +33,6 @@ function setSettings() {
     startGame(teams, timer, german);
 }
 
-function addScore(team) {
-    var teams = JSON.parse(localStorage.getItem("scores"));
-    teams[team]++;
-    //console.log(teams[team]);
-    localStorage.setItem("scores", JSON.stringify(teams));
-}
-
 function printTeams() {
     var teams = JSON.parse(localStorage.getItem("scores"));
     for (var key in teams) {
@@ -55,17 +46,12 @@ function startGame(teams, timer, german) {
     var i = 0;
     var url = getRandomImage();
     document.getElementById("game-image").style.backgroundImage = "url('" + url + "')";
-    
     if(timer) {
         window.setInterval(function() {
-            playingTeam = playingTeams[i];
-            getNext(false);
+            getNext();
         }, 3000);
-    } else {
-        playingTeam = playingTeams[i];
-        /*while(game) {
-        }*/
     }
+    
     /*while (true) {
         console.log(playingTeam);
         playingTeam = (i + 1) + "";
@@ -92,51 +78,27 @@ function startGame(teams, timer, german) {
     printTeams();
 }
 
-function getNext(scoreAdd) {
+function getNext() {
     if(zoomOut) {
         document.getElementById("game-image").style.transform = "scale(1)";
         zoomOut = false;
     } else {
-        addScore(playingTeam);
         var url = getRandomImage();
         if (url == "end") {
-            var gameOver = document.createElement("h1");
-            gameOver.style.marginLeft = "24px";
-            gameOver.innerHTML = "Game Over!";
-            document.getElementById("game").innerHTML = "";
-            document.getElementById("game").appendChild(gameOver);
-            var table = document.createElement("table");
-            var tr, td0, td1;
-            var teams = JSON.parse(localStorage.getItem("scores"));
-            for (var key in teams) {
-                if (teams.hasOwnProperty(key)) {
-                    tr = document.createElement("tr");
-                    td0 = document.createElement("td");
-                    td0.innerHTML = key;
-                    td1 = document.createElement("td");
-                    td1.innerHTML = teams[key];
-                    tr.appendChild(td0);
-                    tr.appendChild(td1);
-                    table.appendChild(tr);
-                }
-            }
-            document.getElementById("game").appendChild(table);
+            document.getElementById("game").innerHTML = '<h1 style="margin-left:24px;">Game Over!</h1>';
             game = false;
             printTeams();
             return;
         }
-        document.getElementById("game-image").style.transform = "scale(3.5)";
         document.getElementById("game-image").style.backgroundImage = "url('" + url + "')";
         zoomOut = true;
     }
+    
 }
 function showAnswer() {
     
 }
 
-document.getElementById("next-button").addEventListener('click', function() {
-    getNext(true);
-});
 /*(function() {
     'use strict';
     window['counter'] = 0;
@@ -150,9 +112,3 @@ document.getElementById("next-button").addEventListener('click', function() {
         snackbarContainer.MaterialSnackbar.showSnackbar(data);
     });
 }());*/
-
-window.addEventListener("keyup", function(e) {
-    if(e.keyCode == 39 && game) {
-        getNext(true)
-    }
-}, true);

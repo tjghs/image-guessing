@@ -6,6 +6,15 @@
     vertical-align: baseline;
     border: 0
 }
+table {
+    min-width: 200px;
+    margin-left: 24px;
+	border-spacing: 0;
+}
+td {
+	border: 1px solid #e0e0e0;
+	padding: 5px;
+}
 #wrapper {
     overflow: hidden;
 }
@@ -51,6 +60,11 @@
     margin: 0;
     background-position: center;
     background-repeat: no-repeat;
+    -webkit-transition: all .4s ease;
+    -moz-transition: all .4s ease;
+    -ms-transition: all .4s ease;
+    -o-transition: all .4s ease;
+    transition: all .4s ease;
     -webkit-transform: scale(3.5);
     -moz-transform: scale(3.5);
     -ms-transform: scale(3.5);
