@@ -1,7 +1,8 @@
 "use strict";
 var playingTeam,
     playingImages = [],
-    goNext = false;
+    goNext = false,
+    game = true;
 
 function setSettings() {
     var teams = {};
@@ -19,8 +20,8 @@ function setSettings() {
     }
     localStorage.setItem("scores", JSON.stringify(teams));
     printTeams();
-    var timer = document.getElementById("timer-toggle").value == "on";
-    var german = document.getElementById("german-toggle").value == "on";
+    var timer = document.getElementById("timer-toggle").checked;
+    var german = document.getElementById("german-toggle").checked;
     console.log(timer);
     console.log(german);
     document.getElementById("settings-dialog").style.opacity = "0";
@@ -44,6 +45,12 @@ function startGame(teams, timer, german) {
     var i = 0;
     var url = getRandomImage();
     document.getElementById("game-image").style.backgroundImage = "url('" + url + "')";
+    if(timer) {
+        window.setInterval(function() {
+            getNext();
+        }, 3000);
+    }
+    
     /*while (true) {
         console.log(playingTeam);
         playingTeam = (i + 1) + "";
@@ -64,7 +71,7 @@ function startGame(teams, timer, german) {
                 break;
             }
             document.getElementById("game-image").style.backgroundImage = "url('" + url + "')";
-            teams[playingTeam]++;
+            
         }
     }*/
     printTeams();
@@ -73,13 +80,17 @@ function startGame(teams, timer, german) {
 function getNext() {
     var url = getRandomImage();
     if (url == "end") {
-        document.getElementById("game").innerHTML = "<h1>Game Over!</h1>";
+        document.getElementById("game").innerHTML = '<h1 style="margin-left:24px;">Game Over!</h1>';
+        game = false;
         printTeams();
         return;
     }
     document.getElementById("game-image").style.backgroundImage = "url('" + url + "')";
 }
-(function() {
+function showAnswer() {
+}
+
+/*(function() {
     'use strict';
     window['counter'] = 0;
     var snackbarContainer = document.querySelector('#demo-toast-example');
@@ -91,4 +102,4 @@ function getNext() {
         };
         snackbarContainer.MaterialSnackbar.showSnackbar(data);
     });
-}());
+}());*/
