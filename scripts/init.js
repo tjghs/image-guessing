@@ -2,8 +2,9 @@
 var playingTeam,
     playingTeams = [],
     goNext = false,
-    game = true,
-    zoomOut = true;
+    game = false,
+    zoomOut = true,
+    dialogOn = false;
 
 function setSettings() {
     var teams = {};
@@ -52,11 +53,12 @@ function printTeams() {
 }
 
 function startGame(teams, timer, german) {
+    game = true;
     var i = 0;
     var url = getRandomImage();
     document.getElementById("game-image").style.backgroundImage = "url('" + url + "')";
-    
-    if(timer) {
+
+    if (timer) {
         window.setInterval(function() {
             playingTeam = playingTeams[i];
             getNext(false);
@@ -93,11 +95,22 @@ function startGame(teams, timer, german) {
 }
 
 function getNext(scoreAdd) {
-    if(zoomOut) {
+    if (zoomOut) {
         document.getElementById("game-image").style.transform = "scale(1)";
+        var bgURL = document.getElementById("game-image").style.backgroundImage;
+        console.log(bgURL);
+        document.getElementById("answer").innerHTML = bgURL.substring(12, bgURL.length - 6);
+        if (game) {
+            dialog.showModal();
+            dialogOn = true;
+        }
         zoomOut = false;
     } else {
         addScore(playingTeam);
+        if (dialogOn) {
+            dialog.close();
+            dialogOn = false;
+        }
         var url = getRandomImage();
         if (url == "end") {
             var gameOver = document.createElement("h1");
@@ -130,12 +143,16 @@ function getNext(scoreAdd) {
         zoomOut = true;
     }
 }
+
 function showAnswer() {
-    
+
 }
 
 document.getElementById("next-button").addEventListener('click', function() {
     getNext(true);
+});
+document.getElementById("close-dialog").addEventListener('click', function() {
+    dialogOn = false;
 });
 /*(function() {
     'use strict';
@@ -152,7 +169,15 @@ document.getElementById("next-button").addEventListener('click', function() {
 }());*/
 
 window.addEventListener("keyup", function(e) {
-    if(e.keyCode == 39 && game) {
+    if (e.keyCode == 39 && game) {
         getNext(true)
     }
 }, true);
+
+var dialog = document.querySelector('dialog');
+if (!dialog.showModal) {
+    dialogPolyfill.registerDialog(dialog);
+}
+dialog.querySelector('.close').addEventListener('click', function() {
+    dialog.close();
+});
